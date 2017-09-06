@@ -1,3 +1,6 @@
+import copy
+
+
 def apply_kwargs(kwargs, default_kwargs):
     for k, v in kwargs.items():
         if isinstance(v, dict):
@@ -9,5 +12,5 @@ def apply_kwargs(kwargs, default_kwargs):
 
 def jabstract(payload):
     def p(**kwargs):
-        return apply_kwargs(kwargs, payload)
+        return apply_kwargs(kwargs, copy.deepcopy(payload))
     return p
