@@ -40,11 +40,25 @@ class TestJabstract(unittest.TestCase):
         self.assertEqual(response1["client"]["name"], "Baboon v2.0")
         self.assertEqual(response2["client"]["name"], "Baboon v3.7")
 
-    def test_jabstract_lets_you_add_a_section_because_some_apis_are_weird_and_fields_are_optionnal(self):
+    def test_jabstract_lets_you_add_a_section_because_some_apis_are_weird_and_fields_are_optional(self):
         api_response = jabstract({
             "client": {
                 "name": "John doe",
             }
+        })
+
+        response = api_response(
+            client=dict(
+                car=dict(
+                    color="blue")
+            )
+        )
+
+        self.assertEqual(response["client"]["car"]["color"], "blue")
+
+    def test_jabstract_an_array_could_become_a_dict____thanks_php_arrays(self):
+        api_response = jabstract({
+            "client": []
         })
 
         response = api_response(
