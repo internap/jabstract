@@ -2,11 +2,12 @@ import copy
 
 
 def apply_kwargs(kwargs, default_kwargs):
-    for k, v in kwargs.items():
-        if isinstance(v, dict):
-            default_kwargs[k] = apply_kwargs(v, default_kwargs.get(k, {}))
+    for field, override in kwargs.items():
+        default = default_kwargs.get(field, {})
+        if isinstance(override, dict) and isinstance(default, dict):
+            default_kwargs[field] = apply_kwargs(override, default)
         else:
-            default_kwargs[k] = v
+            default_kwargs[field] = override
     return default_kwargs
 
 
